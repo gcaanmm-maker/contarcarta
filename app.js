@@ -1,10 +1,56 @@
-//oi
+//oi2
 let playerId = crypto.randomUUID();
-    container.appendChild(div);
-  });
+let playerName = '';
+let roomCode = '';
+
+function generateRoomCode() {
+  return Math.random().toString(36).substring(2, 7).toUpperCase();
 }
 
-async function loadRoomInfo() {
+async function createRoom() {
+
+  playerName = document.getElementById('playerName').value;
+
+  if (!playerName) {
+    alert('Digite seu nome');
+    return;
+  }
+
+  roomCode = generateRoomCode();
+
+  const { error } = await supabaseClient
+    .from('rooms')
+    .insert({
+      code: roomCode,
+      level: 1,
+      lives: 3,
+      started: false
+    });
+
+  if (error) {
+    console.error(error);
+    alert('Erro ao criar sala');
+    return;
+  }
+
+  await addPlayer();
+
+  openGame();
+}
+
+async function joinRoom() {
+
+  playerName = document.getElementById('playerName').value;
+
+  roomCode = document
+    .getElementById('roomCode')
+    .value
+    .toUpperCase();
+
+  if (!playerName || !roomCode) {
+    alert('Preencha tudo');
+    return;
+  }
 
   const { data } = await supabaseClient
     .from('rooms')
@@ -12,55 +58,39 @@ async function loadRoomInfo() {
     .eq('code', roomCode)
     .single();
 
-  document.getElementById('level').innerText = data.level;
+  if (!data) {
+    alert('Sala não encontrada');
+    return;
+  }
 
-  document.getElementById('lives').innerText = data.lives;
+  await addPlayer();
+
+  openGame();
 }
 
-function listenRealtime() {
+async function addPlayer() {
 
-  supabaseClient
-    .channel('players-channel')
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: 'players'
-      },
-      () => {
-        loadPlayers();
-      }
-    )
-    .subscribe();
+  await supabaseClient
+    .from('players')
+    .insert({
+      id: playerId,
+      room_code: roomCode,
+      name: playerName,
+      cards: []
+    });
+}
 
-  supabaseClient
-    .channel('played-channel')
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: 'played_cards'
-      },
-      () => {
-        loadPlayedCards();
-      }
-    )
-    .subscribe();
+function openGame() {
 
-  supabaseClient
-    .channel('rooms-channel')
-    .on(
-      'postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-        table: 'rooms'
-      },
-      () => {
-        loadRoomInfo();
-      }
-    )
-    .subscribe();
+  document
+    .getElementById('loginScreen')
+    .classList
+    .add('hidden');
+
+  document
+    .getElementById('gameScreen')
+    .classList
+    .remove('hidden');
+
+  document.getElementById('roomText').innerText = roomCode;
 }
