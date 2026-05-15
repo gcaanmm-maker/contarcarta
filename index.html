@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+  <title>The Mind Online</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+
+  <h1>The Mind Online</h1>
+
+  <input type="text" id="playerName" placeholder="Seu nome">
+
+  <input type="text" id="roomCode" placeholder="Código da sala">
+
+  <div class="buttons">
+    <button onclick="createRoom()">Criar Sala</button>
+    <button onclick="joinRoom()">Entrar</button>
+  </div>
+
+</div>
+
+<div class="game hidden" id="gameScreen">
+
+  <div class="topbar">
+    <div>
+      Sala: <span id="roomText"></span>
+    </div>
+
+    <div>
+      Nível: <span id="level">1</span>
+    </div>
+
+    <div>
+      ❤️ <span id="lives">3</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="startGame()">
+      Iniciar Jogo
+    </button>
+  </div>
+
+  <div class="players" id="players"></div>
+
+  <div class="table">
+
+    <h2>Mesa</h2>
+
+    <div class="played-cards" id="playedCards"></div>
+
+  </div>
+
+</div>
+
+<script src="supabase.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

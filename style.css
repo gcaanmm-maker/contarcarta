@@ -1,0 +1,74 @@
+* {
+  background: #1e293b;
+  padding: 15px 25px;
+  border-radius: 12px;
+}
+
+.players {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.player {
+  background: #1e293b;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.player h2 {
+  margin-bottom: 15px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card {
+  width: 60px;
+  height: 90px;
+  background: white;
+  color: black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fake-card {
+  width: 60px;
+  height: 90px;
+  background: #334155;
+  border-radius: 10px;
+}
+
+.table {
+  margin-top: 40px;
+  background: #1e293b;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.played-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.played-card {
+  width: 60px;
+  height: 90px;
+  background: #10b981;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+}
