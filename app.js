@@ -1,15 +1,5 @@
-
-
-  container.innerHTML = '';
-
-  data.forEach(card => {
-
-    const div = document.createElement('div');
-
-    div.className = 'played-card';
-
-    div.innerText = card.value;
-
+//oi
+let playerId = crypto.randomUUID();
     container.appendChild(div);
   });
 }
